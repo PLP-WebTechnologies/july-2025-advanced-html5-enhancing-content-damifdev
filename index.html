@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced HTML5 Form - Course Registration</title>
+    <style>
+        /* ===== CSS RESET & BASE STYLES ===== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+
+        /* ===== TYPOGRAPHY ===== */
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin: 1.5rem 0 1rem 0;
+            color: #34495e;
+        }
+
+        /* ===== LAYOUT ===== */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .content-section {
+            background: white;
+            margin: 2rem 0;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            background: linear-gradient(135deg, #3498db, #2c3e50);
+            color: white;
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* ===== LISTS ===== */
+        .course-categories {
+            margin: 1rem 0;
+        }
+
+        .course-categories li {
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            background: #ecf0f1;
+            border-radius: 4px;
+        }
+
+        .course-categories ul {
+            margin-top: 0.5rem;
+            margin-left: 1rem;
+        }
+
+        .course-categories ul li {
+            background: #d5dbdb;
+            margin: 0.25rem 0;
+            font-size: 0.9rem;
+        }
+
+        .prerequisites {
+            background: #e8f6f3;
+            padding: 1rem;
+            border-left: 4px solid #27ae60;
+            counter-reset: step-counter;
+        }
+
+        .prerequisites li {
+            margin: 0.5rem 0;
+            padding-left: 0.5rem;
+        }
+
+        .course-terms {
+            background: #fdf2e9;
+            padding: 1rem;
+            border-radius: 4px;
+        }
+
+        .course-terms dt {
+            font-weight: bold;
+            color: #d68910;
+            margin-top: 1rem;
+        }
+
+        .course-terms dt:first-child {
+            margin-top: 0;
+        }
+
+        .course-terms dd {
+            margin-left: 1rem;
+            margin-bottom: 0.5rem;
+            font-style: italic;
+        }
+
+        /* ===== TABLE STYLES ===== */
+        .course-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+
+        .course-table caption {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+
+        .course-table th,
+        .course-table td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        .course-table thead th {
+            background-color: #3498db;
+            color: white;
+            font-weight: bold;
+        }
+
+        .course-table tbody tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        .course-table tbody tr:hover {
+            background-color: #e3f2fd;
+        }
+
+        .course-table tfoot th {
+            background-color: #34495e;
+            color: white;
+        }
+
+        /* ===== MEDIA STYLES ===== */
+        .media-section {
+            text-align: center;
+        }
+
+        .media-item {
+            margin: 2rem 0;
+            display: inline-block;
+        }
+
+        .media-item img,
+        .media-item video {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .media-item figcaption {
+            margin-top: 0.5rem;
+            font-style: italic;
+            color: #666;
+        }
+
+        .media-item audio {
+            width: 100%;
+            max-width: 400px;
+        }
+
+        /* ===== FORM STYLES ===== */
+        .registration-form {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        fieldset {
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        legend {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #2c3e50;
+            padding: 0 0.5rem;
+        }
+
+        .form-group {
+            margin: 1rem 0;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #34495e;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        /* Input validation styles */
+        input:valid {
+            border-color: #27ae60;
+        }
+
+        input:invalid:not(:placeholder-shown) {
+            border-color: #e74c3c;
+        }
+
+        input[readonly] {
+            background-color: #f8f9fa;
+            color: #666;
+        }
+
+        small {
+            display: block;
+            margin-top: 0.25rem;
+            color: #666;
+            font-size: 0.85rem;
+        }
+
+        /* Radio and Checkbox Groups */
+        .radio-group,
+        .checkbox-group {
+            border: 1px solid #ddd;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .radio-option,
+        .checkbox-option {
+            display: flex;
+            align-items: center;
+            margin: 0.5rem 0;
+        }
+
+        .radio-option input,
+        .checkbox-option input {
+            width: auto;
+            margin-right: 0.5rem;
+        }
+
+        .radio-option label,
+        .checkbox-option label {
+            margin-bottom: 0;
+            cursor: pointer;
+        }
+
+        /* Form Actions */
+        .form-actions {
+            text-align: center;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .btn-primary,
+        .btn-secondary {
+            padding: 12px 24px;
+            margin: 0 0.5rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: #95a5a6;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #7f8c8d;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        footer a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 10px;
+            }
+            
+            .content-section {
+                padding: 1rem;
+                margin: 1rem 0;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            .course-table {
+                font-size: 0.8rem;
+            }
+            
+            .course-table th,
+            .course-table td {
+                padding: 8px;
+            }
+            
+            fieldset {
+                padding: 1rem;
+            }
+            
+            .form-actions {
+                padding: 1rem;
+            }
+            
+            .btn-primary,
+            .btn-secondary {
+                display: block;
+                width: 100%;
+                margin: 0.5rem 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                padding: 2rem 1rem;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .course-table,
+            .course-table thead,
+            .course-table tbody,
+            .course-table th,
+            .course-table td,
+            .course-table tr {
+                display: block;
+            }
+            
+            .course-table thead tr {
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+            
+            .course-table tr {
+                border: 1px solid #ccc;
+                margin-bottom: 10px;
+            }
+            
+            .course-table td {
+                border: none;
+                border-bottom: 1px solid #eee;
+                position: relative;
+                padding-left: 50%;
+            }
+            
+            .course-table td:before {
+                content: attr(data-label);
+                position: absolute;
+                left: 6px;
+                width: 45%;
+                padding-right: 10px;
+                white-space: nowrap;
+                font-weight: bold;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <h1>TechEdu Online Learning Platform</h1>
+        <p>Master new skills with our comprehensive online courses</p>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="container">
+        
+        <!-- Course Information Section with Lists -->
+        <section class="content-section">
+            <h2>Featured Courses</h2>
+            
+            <!-- Unordered List - Course Categories -->
+            <h3>Course Categories</h3>
+            <ul class="course-categories">
+                <li>Web Development
+                    <ul>
+                        <li>HTML5 & CSS3</li>
+                        <li>JavaScript Fundamentals</li>
+                        <li>React & Vue.js</li>
+                    </ul>
+                </li>
+                <li>Data Science
+                    <ul>
+                        <li>Python for Data Analysis</li>
+                        <li>Machine Learning Basics</li>
+                        <li>Data Visualization</li>
+                    </ul>
+                </li>
+                <li>Digital Marketing
+                    <ul>
+                        <li>SEO Optimization</li>
+                        <li>Social Media Strategy</li>
+                        <li>Content Marketing</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <!-- Ordered List - Course Prerequisites -->
+            <h3>Course Prerequisites (In Order)</h3>
+            <ol class="prerequisites">
+                <li>Basic computer literacy</li>
+                <li>High school diploma or equivalent</li>
+                <li>Reliable internet connection</li>
+                <li>Dedication to complete 5-10 hours per week</li>
+                <li>Access to a modern web browser</li>
+            </ol>
+
+            <!-- Definition List - Course Terms -->
+            <h3>Course Terminology</h3>
+            <dl class="course-terms">
+                <dt>LMS</dt>
+                <dd>Learning Management System - The platform where all course materials are hosted</dd>
+                
+                <dt>Certification</dt>
+                <dd>Official document proving completion of course requirements and assessments</dd>
+                
+                <dt>Instructor</dt>
+                <dd>Subject matter expert who creates and delivers course content</dd>
+                
+                <dt>Assessment</dt>
+                <dd>Evaluation method including quizzes, projects, and final examinations</dd>
+            </dl>
+        </section>
+
+        <!-- Course Schedule Table -->
+        <section class="content-section">
+            <h2>Course Schedule & Pricing</h2>
+            <table class="course-table">
+                <caption>Available Courses - Fall 2024 Semester</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Course Name</th>
+                        <th scope="col">Duration</th>
+                        <th scope="col">Start Date</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Instructor</th>
+                        <th scope="col">Level</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">HTML5 & CSS3 Mastery</th>
+                        <td>8 weeks</td>
+                        <td>September 15, 2024</td>
+                        <td>$299</td>
+                        <td>Sarah Johnson</td>
+                        <td>Beginner</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">JavaScript Fundamentals</th>
+                        <td>10 weeks</td>
+                        <td>September 22, 2024</td>
+                        <td>$399</td>
+                        <td>Mike Chen</td>
+                        <td>Intermediate</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">React Development</th>
+                        <td>12 weeks</td>
+                        <td>October 1, 2024</td>
+                        <td>$499</td>
+                        <td>Emily Rodriguez</td>
+                        <td>Advanced</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Python Data Science</th>
+                        <td>14 weeks</td>
+                        <td>September 29, 2024</td>
+                        <td>$599</td>
+                        <td>Dr. Alex Kumar</td>
+                        <td>Intermediate</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th scope="row">Total Courses</th>
+                        <td colspan="3">4 courses available</td>
+                        <td colspan="2">Average: $449</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </section>
+
+        <!-- Media Content Section -->
+        <section class="content-section media-section">
+            <h2>Course Preview Media</h2>
+            
+            <!-- Course Preview Image -->
+            <figure class="media-item">
+                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                     alt="Students collaborating on laptop computers in modern classroom" 
+                     width="800" 
+                     height="400">
+                <figcaption>Students learning web development in our interactive online classroom</figcaption>
+            </figure>
+
+            <!-- Course Introduction Video -->
+            <figure class="media-item">
+                <video controls width="800" height="450" poster="https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80">
+                    <source src="sample-video.mp4" type="video/mp4">
+                    <source src="sample-video.webm" type="video/webm">
+                    <p>Your browser doesn't support HTML5 video. <a href="sample-video.mp4">Download the video</a> instead.</p>
+                </video>
+                <figcaption>Course Introduction: Welcome to TechEdu Platform</figcaption>
+            </figure>
+
+            <!-- Course Audio Podcast -->
+            <figure class="media-item">
+                <audio controls>
+                    <source src="course-intro.mp3" type="audio/mpeg">
+                    <source src="course-intro.ogg" type="audio/ogg">
+                    <p>Your browser doesn't support HTML5 audio. <a href="course-intro.mp3">Download the audio</a> instead.</p>
+                </audio>
+                <figcaption>Podcast: "Tips for Successful Online Learning" - 15 minutes</figcaption>
+            </figure>
+        </section>
+
+        <!-- Enhanced HTML5 Form -->
+        <section class="content-section">
+            <h2>Course Registration Form</h2>
+            <p>Complete the form below to register for your selected course. All fields marked with * are required.</p>
+            
+            <form action="/register" method="post" class="registration-form" novalidate>
+                
+                <!-- Personal Information Fieldset -->
+                <fieldset>
+                    <legend>Personal Information</legend>
+                    
+                    <div class="form-group">
+                        <label for="firstName">First Name *</label>
+                        <input type="text" 
+                               id="firstName" 
+                               name="firstName" 
+                               required 
+                               minlength="2" 
+                               maxlength="50"
+                               placeholder="Enter your first name"
+                               autocomplete="given-name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lastName">Last Name *</label>
+                        <input type="text" 
+                               id="lastName" 
+                               name="lastName" 
+                               required 
+                               minlength="2" 
+                               maxlength="50"
+                               placeholder="Enter your last name"
+                               autocomplete="family-name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" 
+                               id="email" 
+                               name="email" 
+                               required 
+                               placeholder="example@email.com"
+                               autocomplete="email">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone Number *</label>
+                        <input type="tel" 
+                               id="phone" 
+                               name="phone" 
+                               required 
+                               pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                               placeholder="123-456-7890"
+                               autocomplete="tel">
+                        <small>Format: 123-456-7890</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="birthDate">Date of Birth *</label>
+                        <input type="date" 
+                               id="birthDate" 
+                               name="birthDate" 
+                               required 
+                               min="1950-01-01" 
+                               max="2010-12-31"
+                               autocomplete="bday">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="website">Personal Website (Optional)</label>
+                        <input type="url" 
+                               id="website" 
+                               name="website" 
+                               placeholder="https://www.example.com"
+                               autocomplete="url">
+                    </div>
+                </fieldset>
+
+                <!-- Course Selection Fieldset -->
+                <fieldset>
+                    <legend>Course Selection</legend>
+                    
+                    <div class="form-group">
+                        <label for="course">Select Course *</label>
+                        <select id="course" name="course" required>
+                            <option value="">-- Choose a course --</option>
+                            <option value="html-css">HTML5 & CSS3 Mastery</option>
+                            <option value="javascript">JavaScript Fundamentals</option>
+                            <option value="react">React Development</option>
+                            <option value="python">Python Data Science</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="experience">Programming Experience Level *</label>
+                        <select id="experience" name="experience" required>
+                            <option value="">-- Select your level --</option>
+                            <option value="beginner">Beginner (0-1 years)</option>
+                            <option value="intermediate">Intermediate (2-4 years)</option>
+                            <option value="advanced">Advanced (5+ years)</option>
+                        </select>
+                    </div>
+
+                    <fieldset class="radio-group">
+                        <legend>Preferred Learning Schedule *</legend>
+                        <div class="radio-option">
+                            <input type="radio" id="weekday" name="schedule" value="weekday" required>
+                            <label for="weekday">Weekday Evenings (6-8 PM)</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="weekend" name="schedule" value="weekend" required>
+                            <label for="weekend">Weekend Mornings (9-11 AM)</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="flexible" name="schedule" value="flexible" required>
+                            <label for="flexible">Self-Paced (Flexible)</label>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="checkbox-group">
+                        <legend>Additional Services (Optional)</legend>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="mentorship" name="services" value="mentorship">
+                            <label for="mentorship">One-on-one Mentorship (+$99)</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="certificate" name="services" value="certificate">
+                            <label for="certificate">Official Certificate (+$49)</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="career" name="services" value="career">
+                            <label for="career">Career Guidance Session (+$79)</label>
+                        </div>
+                    </fieldset>
+                </fieldset>
+
+                <!-- Academic Background Fieldset -->
+                <fieldset>
+                    <legend>Academic & Professional Background</legend>
+                    
+                    <div class="form-group">
+                        <label for="education">Highest Education Level *</label>
+                        <select id="education" name="education" required>
+                            <option value="">-- Select education level --</option>
+                            <option value="high-school">High School</option>
+                            <option value="associate">Associate Degree</option>
+                            <option value="bachelor">Bachelor's Degree</option>
+                            <option value="master">Master's Degree</option>
+                            <option value="phd">PhD/Doctorate</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="profession">Current Profession</label>
+                        <input type="text" 
+                               id="profession" 
+                               name="profession" 
+                               maxlength="100"
+                               placeholder="e.g., Software Developer, Designer, Student"
+                               autocomplete="organization-title">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="motivation">Why do you want to take this course? *</label>
+                        <textarea id="motivation" 
+                                  name="motivation" 
+                                  required 
+                                  minlength="20" 
+                                  maxlength="500" 
+                                  rows="4" 
+                                  placeholder="Please describe your motivation and goals (minimum 20 characters)"></textarea>
+                        <small>Characters remaining: <span id="charCount">500</span></small>
+                    </div>
+                </fieldset>
+
+                <!-- Payment Information Fieldset -->
+                <fieldset>
+                    <legend>Payment Information</legend>
+                    
+                    <div class="form-group">
+                        <label for="paymentMethod">Payment Method *</label>
+                        <select id="paymentMethod" name="paymentMethod" required>
+                            <option value="">-- Choose payment method --</option>
+                            <option value="credit-card">Credit Card</option>
+                            <option value="debit-card">Debit Card</option>
+                            <option value="paypal">PayPal</option>
+                            <option value="bank-transfer">Bank Transfer</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="coupon">Discount Coupon Code (Optional)</label>
+                        <input type="text" 
+                               id="coupon" 
+                               name="coupon" 
+                               pattern="[A-Z0-9]{6,10}"
+                               placeholder="Enter coupon code"
+                               style="text-transform: uppercase;">
+                        <small>Enter 6-10 character alphanumeric code</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="totalAmount">Course Fee (Read-only)</label>
+                        <input type="text" 
+                               id="totalAmount" 
+                               name="totalAmount" 
+                               value="$299.00" 
+                               readonly>
+                    </div>
+                </fieldset>
+
+                <!-- Terms and Conditions -->
+                <fieldset>
+                    <legend>Terms and Conditions</legend>
+                    
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="terms" name="terms" required>
+                        <label for="terms">I agree to the <a href="#terms" target="_blank">Terms and Conditions</a> *</label>
+                    </div>
+
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="newsletter" name="newsletter">
+                        <label for="newsletter">Subscribe to our newsletter for course updates and promotions</label>
+                    </div>
+
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="privacy" name="privacy" required>
+                        <label for="privacy">I acknowledge that I have read and understood the <a href="#privacy" target="_blank">Privacy Policy</a> *</label>
+                    </div>
+                </fieldset>
+
+                <!-- Hidden Fields -->
+                <input type="hidden" name="referralSource" value="website">
+                <input type="hidden" name="registrationDate" id="registrationDate">
+
+                <!-- Form Submission Buttons -->
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">Register for Course</button>
+                    <button type="reset" class="btn-secondary">Clear Form</button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 TechEdu Online Learning Platform. All rights reserved.</p>
+        <p>Contact us: <a href="mailto:info@techedu.com">info@techedu.com</a> | Phone: <a href="tel:+1234567890">+1 (234) 567-8900</a></p>
+    </footer>
+
+    <!-- Simple JavaScript for character counter and date -->
+    <script>
+        // Character counter for textarea
+        const motivationTextarea = document.getElementById('motivation');
+        const charCount = document.getElementById('charCount');
+        
+        motivationTextarea.addEventListener('input', function() {
+            const remaining = 500 - this.value.length;
+            charCount.textContent = remaining;
+            charCount.style.color = remaining < 50 ? '#e74c3c' : '#666';
+        });
+
+        // Set current date for hidden field
+        document.getElementById('registrationDate').value = new Date().toISOString().split('T')[0];
+
+        // Course price update based on selection
+        const courseSelect = document.getElementById('course');
+        const totalAmount = document.getElementById('totalAmount');
+        const prices = {
+            'html-css': '$299.00',
+            'javascript': '$399.00',
+            'react': '$499.00',
+            'python': '$599.00'
+        };
+
+        courseSelect.addEventListener('change', function() {
+            totalAmount.value = prices[this.value] || '$0.00';
+        });
+    </script>
+</body>
+</html>
